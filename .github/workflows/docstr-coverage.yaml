@@ -1,0 +1,14 @@
+name: check-docstring-coverage
+
+on: [push]
+
+jobs:
+  interrogate:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: JackMcKew/python-interrogate-check@main
+      with:
+        path: 'scarf'
+
