@@ -9,6 +9,4 @@ jobs:
 
     steps:
     - uses: JackMcKew/python-interrogate-check@main
-      with:
-        path: '/home/runner/work/scarf-1/scarf-1/scarf/'
 
