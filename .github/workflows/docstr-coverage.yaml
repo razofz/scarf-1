@@ -9,4 +9,6 @@ jobs:
 
     steps:
     - uses: JackMcKew/python-interrogate-check@main
+      with:
+        path: '/github/workflow/scarf'
 
