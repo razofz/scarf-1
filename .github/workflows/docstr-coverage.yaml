@@ -3,6 +3,12 @@ name: check-docstring-coverage
 on: [push]
 
 jobs:
+  ls:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: 'pwd ; ls -la'
   interrogate:
 
     runs-on: ubuntu-latest
