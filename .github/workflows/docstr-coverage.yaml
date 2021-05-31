@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - run: 'pwd ; ls -la'
+    - run: 'pwd ; ls ; ls $GITHUB_WORKSPACE'
   interrogate:
 
     runs-on: ubuntu-latest
@@ -16,5 +16,5 @@ jobs:
     steps:
     - uses: JackMcKew/python-interrogate-check@main
       with:
-        path: '$GITHUB_WORKSPACE/scarf/'
+        path: '/home/runner/work/scarf-1/scarf-1/scarf/'
 
