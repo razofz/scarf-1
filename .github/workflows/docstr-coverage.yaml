@@ -3,12 +3,13 @@ name: check-docstring-coverage
 on: [push]
 
 jobs:
-  pwd:
+  checkout-repo:
 
     runs-on: ubuntu-latest
 
     steps:
-    - run: 'pwd'
+        - uses: actions/checkout@v2
+          ref: 'docstrings'
   ls:
 
     runs-on: ubuntu-latest
@@ -28,5 +29,5 @@ jobs:
     steps:
     - uses: JackMcKew/python-interrogate-check@main
       with:
-        path: '/home/runner/work/scarf-1/scarf-1/scarf/'
+        path: '$GITHUB_WORKSPACE/scarf'
 
