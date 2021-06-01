@@ -8,12 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - uses: actions/checkout@v2
-        with:
-          ref: 'docstrings'
-      - run: 'ls -la'
-      - run: 'pwd'
-      - run: 'ls $GITHUB_WORKSPACE'
+
       - uses: JackMcKew/python-interrogate-check@main
         with:
           path: './scarf'
