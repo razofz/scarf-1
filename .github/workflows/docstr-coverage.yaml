@@ -16,5 +16,5 @@ jobs:
       - run: 'ls $GITHUB_WORKSPACE'
       - uses: JackMcKew/python-interrogate-check@main
         with:
-          path: '$GITHUB_WORKSPACE/scarf'
+          path: './scarf'
 
