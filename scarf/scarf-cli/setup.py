@@ -7,6 +7,7 @@ setup(
     install_requires=[
         'Click',
         'scarf',
+        'pandas',
     ],
     entry_points={
         'console_scripts': [

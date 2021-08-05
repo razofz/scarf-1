@@ -98,11 +98,20 @@ class Scarf_cli(object):
         construct_graph()
         save_data()
 
+def print_datasets(ctx, param, value):
+    if not value or ctx.resilient_parsing:
+        return
+    scarf.downloader.show_available_datasets()
+    ctx.exit()
+
 @click.group()
 @click.option('--dataset', default='tenx_5K_pbmc_rnaseq', type=str, show_default=True)
 @click.option('-o', '--outputdir', default='./basic-scRNA-Seq', show_default=True)
 # filenames should be handled in a specific way according to click docs
 @click.option('-j', '--nthreads', default=4, required=False)
+@click.option('--show-datasets', is_flag=True, callback=print_datasets,
+        expose_value=False, is_eager=True,
+        help="Show the prepared datasets available for download.")
 @click.version_option()
 # can add scarf.__version__() here later
 # right now only works when pip installed
@@ -116,24 +125,12 @@ def cli(ctx, dataset, outputdir, nthreads):
     # thresholds etc, it makes more sense to split up the functionality. But as
     # a first step, mayhaps a PoC automated pipeline is okay.
 
-# could implement this with https://click.palletsprojects.com/en/8.0.x/options/#callbacks-and-eager-options
-@cli.command()
-def show_datasets():
-    """Show the prepared datasets available for download.
-    """
-    # This function should probably return a list instead of just printing it.
-    # Looked into the downloader.py file, could do my own OSFDownloader here.
-    scarf.downloader.show_available_datasets()
-#     datasets = scarf.downloader.show_available_datasets()
-#     click.echo(datasets)
-
 @cli.command()
 @click.pass_obj
 def run_pipeline(obj):
     """Run the whole pipeline, as automated as possible.
     """
 #     click.echo(obj)
-    print(obj)
 #     obj.run_pipeline()
 
 if __name__ == "__main__":
