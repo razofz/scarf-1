@@ -95,7 +95,7 @@ class Scarf_cli(object):
 
     def mark_hvgs(self):
         click.echo("> Finding highly variable genes..")
-        self.ds.mark_hvgs()
+        self.ds.mark_hvgs(show_plot=False)
 
     def construct_graph(self):
         click.echo("> Constructing graph..")
