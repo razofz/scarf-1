@@ -7,7 +7,8 @@ Classes:
 - Methods:
     - handle_download: carry out the download of a specified dataset
     - show_available_datasets: list datasets offered through Scarf
-    - fetch_dataset: Downloads datasets from online repositories and saves them in as-is format
+    - fetch_dataset: Downloads datasets from online repositories and saves them
+      in as-is format
 """
 
 import requests
@@ -35,7 +36,7 @@ class OSFdownloader:
     Methods:
         get_json:
         get_all_pages:
-        show_datasets:
+        available_datasets:
         get_dataset_file_ids:
     """
 
@@ -56,13 +57,20 @@ class OSFdownloader:
     def get_all_pages(self, storage, endpoint=""):
         data = []
         url = None
-        while True:
-            r = self.get_json(storage, endpoint, url)
-            data.extend(r["data"])
-            url = r["links"]["next"]
-            if url is None:
-                break
-        return data
+        try:
+            while True:
+                r = self.get_json(storage, endpoint, url)
+                data.extend(r["data"])
+                url = r["links"]["next"]
+                if url is None:
+                    break
+            return data
+        except:
+            raise KeyError(
+                f"ERROR: '{self.projectId}' was not found. "
+                "Please run show_available_datasets() "
+                "to see what datasets are available."
+            )
 
     @staticmethod
     def _process_path(node):
@@ -90,8 +98,8 @@ class OSFdownloader:
             .to_dict()
         )
 
-    def show_datasets(self):
-        print("\n".join(sorted(self.datasets.keys())))
+    def available_datasets(self):
+        return "\n".join(sorted(self.datasets.keys()))
 
     def _get_files_for_node(self, storage, file_id):
         base_url = f"https://files.de-1.osf.io/v1/resources/{self.projectId}/providers/"
@@ -105,7 +113,8 @@ class OSFdownloader:
         if dataset_name not in self.datasets:
             raise KeyError(
                 f"ERROR: {dataset_name} was not found. "
-                f"Please choose one of the following:\n{self.show_datasets()}"
+                "Please run show_available_datasets() "
+                "to see what datasets are available."
             )
         file_id, storage = self.datasets[dataset_name]
         return self._get_files_for_node(storage, file_id)
@@ -120,7 +129,8 @@ def handle_download(url: str, out_fn: str, seq_counter: str = "") -> None:
 
     Args:
         url: URL of file to be downloaded
-        out_fn: Absolute path to the file where the downloaded data is to be saved
+        out_fn: Absolute path to the file where the downloaded data is
+          to be saved
         seq_counter: show the sequence number of the download
 
     Returns: None
@@ -163,7 +173,7 @@ def show_available_datasets() -> None:
     global osfd
     if osfd is None:
         osfd = OSFdownloader("zeupv")
-    osfd.show_datasets()
+    print(osfd.available_datasets())
 
 
 def fetch_dataset(
