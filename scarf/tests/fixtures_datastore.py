@@ -101,6 +101,14 @@ def umap(make_graph, datastore):
 
 
 @pytest.fixture(scope="class")
+def tsne(make_graph, datastore):
+    datastore.run_tsne()
+    yield np.array(
+        [datastore.cells.fetch("RNA_tSNE1"), datastore.cells.fetch("RNA_tSNE2")]
+    ).T
+
+
+@pytest.fixture(scope="class")
 def marker_search(datastore):
     # Testing this with Paris clusters rather then Leiden clusters because of reproducibility.
     datastore.run_marker_search(group_key="RNA_cluster")

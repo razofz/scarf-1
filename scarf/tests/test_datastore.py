@@ -105,6 +105,10 @@ class TestDataStore:
             cell_cycle_scoring, cell_attrs["RNA_cell_cycle_phase"].values
         )
 
+    def test_tsne(self, tsne, cell_attrs):
+        precalc_tsne = cell_attrs[["RNA_tSNE1", "RNA_tSNE2"]].values
+        assert tsne.shape == precalc_tsne.shape
+
     def test_umap_values(self, umap, cell_attrs):
         precalc_umap = cell_attrs[["RNA_UMAP1", "RNA_UMAP2"]].values
         assert umap.shape == precalc_umap.shape
