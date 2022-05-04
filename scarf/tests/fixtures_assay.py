@@ -6,7 +6,7 @@ from ..metadata import MetaData
 from . import full_path, remove
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def dummy_assay():
     import tarfile
 
